@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crocs Store - Moda com Estilo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/jpeg" href="images/1.logo.jpeg">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="images/1.logo.jpeg" alt="Crocs Store Logo">
+                    <span class="brand-name">Crocs Store</span>
+                </div>
+                
+                <!-- Campo de Busca -->
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Buscar produtos..." class="search-input" aria-label="Buscar produtos">
+                    <button class="search-btn" onclick="clearSearch()" aria-label="Limpar busca">✕</button>
+                </div>
+                
+                                
+                <!-- Menu Mobile -->
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Estilo que define seu Tom</h1>
+                <p class="hero-subtitle">Camisas e bermudas com qualidade e preço justo</p>
+                <button class="btn btn-primary btn-hero" onclick="scrollToProdutos()">Ver Produtos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="produtos" class="products">
+        <div class="container">
+            <h2 class="section-title">Nossos Produtos</h2>
+            
+            <!-- Filter Buttons -->
+            <div class="filter-container">
+                <button class="btn-filter active" data-filter="todos">Todos</button>
+                <button class="btn-filter" data-filter="camisas">Camisas</button>
+                <button class="btn-filter" data-filter="bermudas">Bermudas</button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid">
+                <!-- Camisas -->
+                <div class="product-card" data-category="camisas">
+                    <div class="product-image">
+                        <img src="images/2.camisa_preta.jpeg" alt="Camisa Preta">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Camisa Preta</h3>
+                        <p class="product-price">R$ 130,00</p>
+                        <button class="btn btn-buy" onclick="openProductModal('Camisa Preta', 130.00, 'images/2.camisa_preta.jpeg', 'camisa')">Ver Detalhes</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="camisas">
+                    <div class="product-image">
+                        <img src="images/3.camisa_branca.jpeg" alt="Camisa Branca">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Camisa Branca</h3>
+                        <p class="product-price">R$ 130,00</p>
+                        <button class="btn btn-buy" onclick="openProductModal('Camisa Branca', 130.00, 'images/3.camisa_branca.jpeg', 'camisa')">Ver Detalhes</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="camisas">
+                    <div class="product-image">
+                        <img src="images/4.camisa_azul_marinho.jpeg" alt="Camisa Azul Marinho">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Camisa Azul Marinho</h3>
+                        <p class="product-price">R$ 130,00</p>
+                        <button class="btn btn-buy" onclick="openProductModal('Camisa Azul Marinho', 130.00, 'images/4.camisa_azul_marinho.jpeg', 'camisa')">Ver Detalhes</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="camisas">
+                    <div class="product-image">
+                        <img src="images/5.camisa_vermelha.jpeg" alt="Camisa Vermelha">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Camisa Vermelha</h3>
+                        <p class="product-price">R$ 130,00</p>
+                        <button class="btn btn-buy" onclick="openProductModal('Camisa Vermelha', 130.00, 'images/5.camisa_vermelha.jpeg', 'camisa')">Ver Detalhes</button>
+                    </div>
+                </div>
+
+                <!-- Bermudas -->
+                <div class="product-card" data-category="bermudas">
+                    <div class="product-image">
+                        <img src="images/7.bermuda_azul_marinho.jpeg" alt="Bermuda Azul Marinho">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Bermuda Azul Marinho</h3>
+                        <p class="product-price">R$ 90,00</p>
+                        <button class="btn btn-buy" onclick="openProductModal('Bermuda Azul Marinho', 90.00, 'images/7.bermuda_azul_marinho.jpeg', 'bermuda')">Ver Detalhes</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="bermudas">
+                    <div class="product-image">
+                        <img src="images/8.bermuda_verde.jpeg" alt="Bermuda Verde">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Bermuda Verde</h3>
+                        <p class="product-price">R$ 90,00</p>
+                        <button class="btn btn-buy" onclick="openProductModal('Bermuda Verde', 90.00, 'images/8.bermuda_verde.jpeg', 'bermuda')">Ver Detalhes</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="bermudas">
+                    <div class="product-image">
+                        <img src="images/9.bermuda_preta.jpeg" alt="Bermuda Preta">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Bermuda Preta</h3>
+                        <p class="product-price">R$ 90,00</p>
+                        <button class="btn btn-buy" onclick="openProductModal('Bermuda Preta', 90.00, 'images/9.bermuda_preta.jpeg', 'bermuda')">Ver Detalhes</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="bermudas">
+                    <div class="product-image">
+                        <img src="images/10.bermuda_azul.jpeg" alt="Bermuda Azul">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Bermuda Azul</h3>
+                        <p class="product-price">R$ 90,00</p>
+                        <button class="btn btn-buy" onclick="openProductModal('Bermuda Azul', 90.00, 'images/10.bermuda_azul.jpeg', 'bermuda')">Ver Detalhes</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="bermudas">
+                    <div class="product-image">
+                        <img src="images/11.bermuda_vermelha.jpeg" alt="Bermuda Vermelha">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Bermuda Vermelha</h3>
+                        <p class="product-price">R$ 90,00</p>
+                        <button class="btn btn-buy" onclick="openProductModal('Bermuda Vermelha', 90.00, 'images/11.bermuda_vermelha.jpeg', 'bermuda')">Ver Detalhes</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="bermudas">
+                    <div class="product-image">
+                        <img src="images/12.bermuda_branca.jpeg" alt="Bermuda Branca">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Bermuda Branca</h3>
+                        <p class="product-price">R$ 90,00</p>
+                        <button class="btn btn-buy" onclick="openProductModal('Bermuda Branca', 90.00, 'images/12.bermuda_branca.jpeg', 'bermuda')">Ver Detalhes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Botão Voltar ao Topo -->
+    <button id="backToTop" class="back-to-top" onclick="scrollToTop()" aria-label="Voltar ao topo">
+        ↑
+    </button>
+
+    <!-- Footer -->
+    <footer id="contato" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 Crocs Store - Todos os direitos reservados</p>
+                <p class="contact-info">Contato: contato@crocsstore.com | WhatsApp: (11) 98527-8370</p>
+                <p class="admin-link">
+                    <a href="admin.html" target="_blank" style="color: var(--primary-green); text-decoration: none;">
+                        🔐 Painel Administrativo
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Carrinho de Compras</h2>
+            <div id="cartItems"></div>
+            <div class="modal-total">
+                <strong>Total: R$ <span id="cartTotal">0.00</span></strong>
+            </div>
+            <!-- Resumo do Pedido -->
+            <div id="orderSummary" class="order-summary" style="display: none;">
+                <h3>Resumo do Pedido</h3>
+                <div id="summaryItems"></div>
+                <div class="summary-total">
+                    <strong>Total: R$ <span id="summaryTotal">0.00</span></strong>
+                </div>
+                <div class="summary-note">
+                    <small>Forma de retirada: (a combinar)</small>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="clearCart()">Limpar Carrinho</button>
+                <button class="btn btn-primary" onclick="confirmOrder()">Confirmar e ir para WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content product-modal-content">
+            <span class="close" onclick="closeProductModal()">&times;</span>
+            <div class="product-details">
+                <div class="product-image-container">
+                    <img id="modalProductImage" src="" alt="" class="modal-product-image">
+                </div>
+                <div class="product-info-container">
+                    <h2 id="modalProductName"></h2>
+                    <p id="modalProductPrice" class="modal-price"></p>
+                    <p class="product-description">Conforto e estilo para o dia a dia</p>
+                    
+                    <!-- Size Selection -->
+                    <div class="selection-section">
+                        <h3>Tamanho:</h3>
+                        <div class="size-options">
+                            <button class="size-btn" data-size="P" onclick="selectSize('P')">P</button>
+                            <button class="size-btn" data-size="M" onclick="selectSize('M')">M</button>
+                            <button class="size-btn" data-size="G" onclick="selectSize('G')">G</button>
+                            <button class="size-btn" data-size="GG" onclick="selectSize('GG')">GG</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Color Selection -->
+                    <div class="selection-section">
+                        <h3>Cor:</h3>
+                        <div class="color-options">
+                            <img src="images/6.opcoes_de_cor.jpeg" alt="Opções de cor" class="color-options-image">
+                            <div class="color-buttons">
+                                <button class="color-btn" data-color="azul" onclick="selectColor('azul')" style="background-color: #0066CC;"></button>
+                                <button class="color-btn" data-color="branco" onclick="selectColor('branco')" style="background-color: #FFFFFF; border: 1px solid #ccc;"></button>
+                                <button class="color-btn" data-color="vermelho" onclick="selectColor('vermelho')" style="background-color: #CC0000;"></button>
+                                <button class="color-btn" data-color="preto" onclick="selectColor('preto')" style="background-color: #000000;"></button>
+                                <button class="color-btn" data-color="verde" onclick="selectColor('verde')" style="background-color: #00A86B;"></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="addToCartBtn" class="btn btn-primary btn-add-to-cart" onclick="addProductToCart()">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
