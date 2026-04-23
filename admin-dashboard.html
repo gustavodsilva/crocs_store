@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administrativo - Tom Store</title>
+    <link rel="icon" type="image/jpeg" href="images/1.logo.jpeg">
+    <link rel="stylesheet" href="admin-dashboard.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Carregando...</p>
+    </div>
+
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="admin-nav">
+            <div class="admin-logo">
+                <img src="images/1.logo.jpeg" alt="Tom Store Logo">
+                <span>Tom Store Admin</span>
+            </div>
+            <div class="admin-user">
+                <span id="userInfo">Carregando...</span>
+                <button id="logoutBtn" class="btn-logout">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <div class="admin-container">
+            <!-- Dashboard Stats -->
+            <section class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-info">
+                        <h3 id="totalProducts">0</h3>
+                        <p>Total de Produtos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📁</div>
+                    <div class="stat-info">
+                        <h3 id="totalCategories">0</h3>
+                        <p>Total de Categorias</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <h3 id="avgPrice">R$ 0,00</h3>
+                        <p>Preço Médio</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tabs Navigation -->
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-tab="produtos">📦 Produtos</button>
+                <button class="tab-btn" data-tab="categorias">📁 Categorias</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Produtos Tab -->
+                <div id="produtos-tab" class="tab-pane active">
+                    <section class="products-section">
+                        <div class="section-header">
+                            <h2>Gerenciamento de Produtos</h2>
+                            <button id="addProductBtn" class="btn-primary">➕ Adicionar Produto</button>
+                        </div>
+                        
+                        <!-- Filtros -->
+                        <div class="filters">
+                            <select id="categoryFilter">
+                                <option value="">Todas as Categorias</option>
+                            </select>
+                            <input type="text" id="productSearch" placeholder="Buscar produto...">
+                        </div>
+                        
+                        <!-- Lista de Produtos -->
+                        <div id="productsList" class="data-grid">
+                            <!-- Produtos serão carregados via JavaScript -->
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Categorias Tab -->
+                <div id="categorias-tab" class="tab-pane">
+                    <section class="categories-section">
+                        <div class="section-header">
+                            <h2>Gerenciamento de Categorias</h2>
+                            <button id="addCategoryBtn" class="btn-primary">➕ Adicionar Categoria</button>
+                        </div>
+                        
+                        <!-- Lista de Categorias -->
+                        <div id="categoriesList" class="data-grid">
+                            <!-- Categorias serão carregadas via JavaScript -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Produto -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="productModalTitle">Adicionar Produto</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="productForm" class="modal-form">
+                <input type="hidden" id="productId">
+                
+                <div class="form-group">
+                    <label for="productName">Nome do Produto:</label>
+                    <input type="text" id="productName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="productPrice">Preço:</label>
+                    <input type="number" id="productPrice" step="0.01" min="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="productCategory">Categoria:</label>
+                    <select id="productCategory" required>
+                        <option value="">Selecione...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="productImage">Nome da Imagem:</label>
+                    <input type="text" id="productImage" placeholder="ex: camisa_preta.jpeg">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary cancel-btn">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Categoria -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="categoryModalTitle">Adicionar Categoria</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="categoryForm" class="modal-form">
+                <input type="hidden" id="categoryId">
+                
+                <div class="form-group">
+                    <label for="categoryName">Nome da Categoria:</label>
+                    <input type="text" id="categoryName" required>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary cancel-btn">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>

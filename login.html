@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Tom Store</title>
+    <link rel="icon" type="image/jpeg" href="images/1.logo.jpeg">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="images/1.logo.jpeg" alt="Tom Store Logo" class="login-logo">
+                <h1>Tom Store</h1>
+                <p>Moda com Estilo</p>
+            </div>
+            
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Usuário:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="btn-login" id="loginBtn">
+                    <span class="btn-text">Entrar</span>
+                    <span class="btn-loading" style="display: none;">Entrando...</span>
+                </button>
+            </form>
+            
+            <div id="loginError" class="error-message" style="display: none;">
+                <span class="error-icon">⚠️</span>
+                <span class="error-text"></span>
+            </div>
+            
+            <div class="login-info">
+                <h3>Tipos de Acesso:</h3>
+                <div class="access-types">
+                    <div class="access-type">
+                        <span class="icon">👤</span>
+                        <div>
+                            <strong>Cliente:</strong>
+                            <p>Acesso à loja para compras</p>
+                        </div>
+                    </div>
+                    <div class="access-type">
+                        <span class="icon">👨‍💼</span>
+                        <div>
+                            <strong>Administrador:</strong>
+                            <p>Acesso ao painel de controle</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Carregando...</p>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
