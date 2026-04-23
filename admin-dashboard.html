@@ -133,8 +133,24 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="productImage">Nome da Imagem:</label>
-                    <input type="text" id="productImage" placeholder="ex: camisa_preta.jpeg">
+                    <label for="productImageUpload">Imagem do Produto:</label>
+                    <div class="image-upload-container">
+                        <input type="file" id="productImageUpload" accept="image/*" onchange="previewImage(event)">
+                        <button type="button" class="btn-upload" onclick="document.getElementById('productImageUpload').click()">
+                            📷 Escolher Imagem
+                        </button>
+                        <input type="text" id="productImage" placeholder="ou digite o nome da imagem existente" style="margin-top: 10px;">
+                    </div>
+                    <div id="imagePreview" class="image-preview" style="display: none;">
+                        <img id="previewImg" src="" alt="Preview">
+                        <button type="button" class="btn-remove-image" onclick="removeImage()">❌ Remover</button>
+                    </div>
+                    <div id="uploadProgress" class="upload-progress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Enviando...</span>
+                    </div>
                 </div>
                 
                 <div class="modal-actions">

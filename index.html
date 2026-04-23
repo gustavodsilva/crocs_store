@@ -23,13 +23,17 @@
                     <button class="search-btn" onclick="clearSearch()" aria-label="Limpar busca">✕</button>
                 </div>
                 
-                                
-                <!-- Menu Mobile -->
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+                <!-- Área do Usuário -->
+                <div class="user-area" id="userArea">
+                    <div class="user-info" id="userInfo" style="display: none;">
+                        <span class="user-name">Olá, <span id="userName">Visitante</span></span>
+                        <button class="btn-logout" onclick="logout()">Sair</button>
+                    </div>
+                    <div class="guest-info" id="guestInfo">
+                        <a href="login.html" class="btn-login">Entrar</a>
+                        <a href="cadastro.html" class="btn-cadastro">Cadastrar</a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -185,12 +189,7 @@
             <div class="footer-content">
                 <p>&copy; 2026 Crocs Store - Todos os direitos reservados</p>
                 <p class="contact-info">Contato: contato@crocsstore.com | WhatsApp: (11) 98527-8370</p>
-                <p class="admin-link">
-                    <a href="admin.html" target="_blank" style="color: var(--primary-green); text-decoration: none;">
-                        🔐 Painel Administrativo
-                    </a>
-                </p>
-            </div>
+                            </div>
         </div>
     </footer>
 

@@ -205,6 +205,7 @@ function searchProducts(searchTerm) {
 document.addEventListener('DOMContentLoaded', function() {
     loadCart(); // Carregar carrinho salvo
     loadProductsFromAdmin(); // Carregar produtos do admin
+    checkUserSession(); // Verificar sessão do usuário
     initializeFilters();
     initializeAnimations();
     setupScrollEffects();
@@ -212,6 +213,91 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeSearch();
     initializeBackToTop();
 });
+
+// ========================================
+// FUNÇÕES DE SESSÃO DO USUÁRIO
+// ========================================
+
+async function checkUserSession() {
+    try {
+        // Verificar se usuário está logado via API
+        const response = await fetch('api/check_session.php');
+        
+        if (response.ok) {
+            const data = await response.json();
+            
+            if (data.logged_in && data.user) {
+                // Usuário está logado
+                showUserInfo(data.user);
+            } else {
+                // Usuário não está logado
+                showGuestInfo();
+            }
+        } else {
+            // Erro na verificação, mostrar como visitante
+            showGuestInfo();
+        }
+    } catch (error) {
+        console.error('Erro ao verificar sessão:', error);
+        showGuestInfo();
+    }
+}
+
+function showUserInfo(user) {
+    const userInfo = document.getElementById('userInfo');
+    const guestInfo = document.getElementById('guestInfo');
+    const userName = document.getElementById('userName');
+    
+    // Exibir informações do usuário
+    userName.textContent = user.nome || user.username || 'Usuário';
+    userInfo.style.display = 'flex';
+    guestInfo.style.display = 'none';
+}
+
+function showGuestInfo() {
+    const userInfo = document.getElementById('userInfo');
+    const guestInfo = document.getElementById('guestInfo');
+    
+    // Exibir opções para visitante
+    userInfo.style.display = 'none';
+    guestInfo.style.display = 'flex';
+}
+
+async function logout() {
+    if (!confirm('Tem certeza que deseja sair?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch('api/logout.php', {
+            method: 'POST'
+        });
+        
+        if (response.ok) {
+            // Logout bem-sucedido
+            showGuestInfo();
+            
+            // Limpar carrinho do usuário
+            clearCart();
+            
+            // Mostrar mensagem
+            showNotification('Logout realizado com sucesso!', 'success');
+            
+            // Redirecionar para login após 1 segundo
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1000);
+        } else {
+            throw new Error('Erro no logout');
+        }
+    } catch (error) {
+        console.error('Erro no logout:', error);
+        showNotification('Erro ao fazer logout', 'error');
+    }
+}
+
+// Tornar função logout global
+window.logout = logout;
 
 // Função para adicionar produto ao carrinho
 function addToCart(productName, price) {
@@ -1002,15 +1088,33 @@ function updateProductsGrid(products) {
     let html = '';
     
     products.forEach(product => {
+        // Determinar fonte da imagem: uploads ou images
+        let imageSrc;
+        if (product.imagem) {
+            // Se começa com 'uploads/', usar como está
+            if (product.imagem.startsWith('uploads/')) {
+                imageSrc = product.imagem;
+            } else {
+                // Adicionar 'uploads/' ao caminho
+                imageSrc = 'uploads/' + product.imagem;
+            }
+        } else if (product.image) {
+            // Fallback para imagens antigas
+            imageSrc = 'images/' + product.image;
+        } else {
+            // Fallback para logo
+            imageSrc = 'images/1.logo.jpeg';
+        }
+        
         html += `
-            <div class="product-card" data-category="${product.category}">
+            <div class="product-card" data-category="${product.categoria || product.category}">
                 <div class="product-image">
-                    <img src="images/${product.image}" alt="${product.name}" onerror="this.src='images/1.logo.jpeg'">
+                    <img src="${imageSrc}" alt="${product.nome || product.name}" onerror="this.src='images/1.logo.jpeg'">
                 </div>
                 <div class="product-info">
-                    <h3 class="product-name">${product.name}</h3>
-                    <p class="product-price">R$ ${product.price.toFixed(2)}</p>
-                    <button class="btn btn-buy" onclick="openProductModal('${product.name}', ${product.price}, 'images/${product.image}', '${product.category}')">Ver Detalhes</button>
+                    <h3 class="product-name">${product.nome || product.name}</h3>
+                    <p class="product-price">R$ ${parseFloat(product.preco || product.price).toFixed(2)}</p>
+                    <button class="btn btn-buy" onclick="openProductModal('${product.nome || product.name}', ${product.preco || product.price}, '${imageSrc}', '${product.categoria || product.category}')">Ver Detalhes</button>
                 </div>
             </div>
         `;

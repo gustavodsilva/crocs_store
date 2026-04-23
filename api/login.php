@@ -36,8 +36,8 @@ try {
     $database = new Database();
     $db = $database->getConnection();
 
-    // Buscar usuário no banco
-    $query = "SELECT id, username, password, role FROM users WHERE username = :username";
+    // Buscar usuário no banco (por username ou telefone)
+    $query = "SELECT id, nome, username, telefone, password, role FROM users WHERE (username = :username OR telefone = :username)";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':username', $username);
     $stmt->execute();
@@ -68,15 +68,23 @@ try {
     // Log de atividade
     logActivity("Login successful", $user['id']);
 
+    // Atualizar último login
+    $updateQuery = "UPDATE users SET last_login = NOW() WHERE id = :id";
+    $updateStmt = $db->prepare($updateQuery);
+    $updateStmt->bindParam(':id', $user['id']);
+    $updateStmt->execute();
+
     // Retornar resposta de sucesso
     jsonResponse([
         'success' => true,
         'user' => [
             'id' => $user['id'],
+            'nome' => $user['nome'],
             'username' => $user['username'],
+            'telefone' => $user['telefone'],
             'role' => $user['role']
         ],
-        'redirect' => $user['role'] === 'admin' ? 'admin.html' : 'index.html'
+        'redirect' => $user['role'] === 'admin' ? 'admin-dashboard.html' : 'index.html'
     ]);
 
 } catch (PDOException $e) {

@@ -241,13 +241,21 @@ function renderProducts() {
     
     let html = '';
     filteredProducts.forEach(product => {
+        const imageSrc = product.imagem ? 
+            (product.imagem.startsWith('uploads/') ? product.imagem : 'uploads/' + product.imagem) : 
+            'images/1.logo.jpeg';
+        
         html += `
-            <div class="data-item">
+            <div class="data-item product-item">
+                <div class="product-image-container">
+                    <img src="${imageSrc}" alt="${product.nome}" class="product-thumbnail" 
+                         onerror="this.src='images/1.logo.jpeg'">
+                </div>
                 <div class="data-info">
                     <h3>${product.nome}</h3>
                     <p>Categoria: ${product.categoria_nome || 'N/A'}</p>
                     <div class="data-price">R$ ${parseFloat(product.preco).toFixed(2)}</div>
-                    ${product.imagem ? `<p><small>Imagem: ${product.imagem}</small></p>` : ''}
+                    ${product.imagem ? `<p><small>📁 ${product.imagem}</small></p>` : '<p><small>📁 Sem imagem</small></p>'}
                 </div>
                 <div class="data-actions">
                     <button class="btn-edit" onclick="editProduct(${product.id})">Editar</button>
@@ -362,6 +370,10 @@ function updateCategoryFilters() {
 function openProductModal(product = null) {
     currentEditingProduct = product;
     
+    // Limpar upload anterior
+    uploadedImageName = null;
+    removeImage();
+    
     if (product) {
         // Editar produto
         document.getElementById('productModalTitle').textContent = 'Editar Produto';
@@ -370,6 +382,14 @@ function openProductModal(product = null) {
         document.getElementById('productPrice').value = product.preco;
         document.getElementById('productCategory').value = product.categoria_id;
         document.getElementById('productImage').value = product.imagem || '';
+        
+        // Mostrar imagem existente se houver
+        if (product.imagem) {
+            const preview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            previewImg.src = product.imagem.startsWith('uploads/') ? product.imagem : 'uploads/' + product.imagem;
+            preview.style.display = 'flex';
+        }
     } else {
         // Adicionar produto
         document.getElementById('productModalTitle').textContent = 'Adicionar Produto';
@@ -397,6 +417,123 @@ function openCategoryModal(category = null) {
 }
 
 // ========================================
+// FUNÇÕES DE UPLOAD DE IMAGEM
+// ========================================
+
+let uploadedImageName = null;
+
+function previewImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    // Validar tipo de arquivo
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+        showToast('Tipo de arquivo não permitido. Apenas: JPG, PNG, GIF, WebP', 'error');
+        event.target.value = '';
+        return;
+    }
+    
+    // Validar tamanho (2MB)
+    const maxSize = 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+        showToast('O arquivo é muito grande. Tamanho máximo: 2MB', 'error');
+        event.target.value = '';
+        return;
+    }
+    
+    // Mostrar preview
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const preview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        
+        previewImg.src = e.target.result;
+        preview.style.display = 'flex';
+    };
+    reader.readAsDataURL(file);
+    
+    // Fazer upload
+    uploadImage(file);
+}
+
+async function uploadImage(file) {
+    const progressContainer = document.getElementById('uploadProgress');
+    const progressFill = progressContainer.querySelector('.progress-fill');
+    const progressText = progressContainer.querySelector('.progress-text');
+    
+    progressContainer.style.display = 'block';
+    
+    const formData = new FormData();
+    formData.append('imagem', file);
+    
+    try {
+        // Simular progresso (não é possível obter progresso real com fetch)
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += Math.random() * 30;
+            if (progress > 90) progress = 90;
+            progressFill.style.width = progress + '%';
+            progressText.textContent = `Enviando... ${Math.round(progress)}%`;
+        }, 200);
+        
+        const response = await fetch(`${API_BASE_URL}/upload.php`, {
+            method: 'POST',
+            body: formData
+        });
+        
+        clearInterval(progressInterval);
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            progressFill.style.width = '100%';
+            progressText.textContent = 'Upload concluído!';
+            
+            // Salvar nome da imagem
+            uploadedImageName = data.data.fileName;
+            document.getElementById('productImage').value = uploadedImageName;
+            
+            showToast('Imagem enviada com sucesso', 'success');
+            
+            // Esconder progress após 2 segundos
+            setTimeout(() => {
+                progressContainer.style.display = 'none';
+                progressFill.style.width = '0%';
+            }, 2000);
+            
+        } else {
+            throw new Error(data.error);
+        }
+        
+    } catch (error) {
+        console.error('Erro no upload:', error);
+        showToast('Erro ao enviar imagem: ' + error.message, 'error');
+        
+        // Esconder preview e progress
+        document.getElementById('imagePreview').style.display = 'none';
+        progressContainer.style.display = 'none';
+        document.getElementById('productImageUpload').value = '';
+    }
+}
+
+function removeImage() {
+    // Limpar preview
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('previewImg').src = '';
+    
+    // Limpar input
+    document.getElementById('productImageUpload').value = '';
+    
+    // Limpar nome da imagem
+    uploadedImageName = null;
+    document.getElementById('productImage').value = '';
+    
+    // Esconder progress
+    document.getElementById('uploadProgress').style.display = 'none';
+}
+
+// ========================================
 // HANDLERS DE FORMULÁRIO
 // ========================================
 
@@ -408,7 +545,7 @@ async function handleProductSubmit(e) {
         nome: document.getElementById('productName').value.trim(),
         preco: parseFloat(document.getElementById('productPrice').value),
         categoria_id: parseInt(document.getElementById('productCategory').value),
-        imagem: document.getElementById('productImage').value.trim()
+        imagem: uploadedImageName || document.getElementById('productImage').value.trim()
     };
     
     if (!formData.nome || !formData.preco || !formData.categoria_id) {

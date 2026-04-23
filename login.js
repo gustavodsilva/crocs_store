@@ -7,8 +7,6 @@ const API_BASE_URL = 'api';
 
 // Elementos do DOM
 const loginForm = document.getElementById('loginForm');
-const usernameInput = document.getElementById('username');
-const passwordInput = document.getElementById('password');
 const loginBtn = document.getElementById('loginBtn');
 const btnText = document.querySelector('.btn-text');
 const btnLoading = document.querySelector('.btn-loading');
@@ -19,6 +17,53 @@ const loadingOverlay = document.getElementById('loadingOverlay');
 // Event Listeners
 loginForm.addEventListener('submit', handleLogin);
 
+// Máscara de telefone
+document.getElementById('username').addEventListener('input', maskTelefone);
+
+// Detectar se é telefone ou username
+document.getElementById('username').addEventListener('blur', function() {
+    const value = this.value;
+    const hasLetters = /[a-zA-Z]/.test(value);
+    const numbersOnly = value.replace(/\D/g, '');
+    
+    if (hasLetters || numbersOnly.length < 10) {
+        this.placeholder = 'nome de usuário';
+    } else {
+        this.placeholder = '(11) 99999-9999';
+    }
+});
+
+function maskTelefone(e) {
+    let value = e.target.value;
+    
+    // Verificar se é um username (contém letras) ou número de telefone
+    const hasLetters = /[a-zA-Z]/.test(value);
+    
+    // Se tiver letras, não aplicar máscara (é um username)
+    if (hasLetters) {
+        return; // Não fazer nada, deixar o usuário digitar normalmente
+    }
+    
+    // Se for número, aplicar máscara de telefone
+    let numbersOnly = value.replace(/\D/g, '');
+    
+    if (numbersOnly.length === 0) return;
+    
+    if (numbersOnly.length <= 11) {
+        if (numbersOnly.length <= 2) {
+            value = `(${numbersOnly}`;
+        } else if (numbersOnly.length <= 6) {
+            value = `(${numbersOnly.slice(0, 2)}) ${numbersOnly.slice(2)}`;
+        } else if (numbersOnly.length <= 10) {
+            value = `(${numbersOnly.slice(0, 2)}) ${numbersOnly.slice(2, 6)}-${numbersOnly.slice(6)}`;
+        } else {
+            value = `(${numbersOnly.slice(0, 2)}) ${numbersOnly.slice(2, 7)}-${numbersOnly.slice(7)}`;
+        }
+    }
+    
+    e.target.value = value;
+}
+
 // ========================================
 // FUNÇÕES PRINCIPAIS
 // ========================================
@@ -26,8 +71,8 @@ loginForm.addEventListener('submit', handleLogin);
 async function handleLogin(e) {
     e.preventDefault();
     
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value;
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
     
     // Validação básica
     if (!username || !password) {

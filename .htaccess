@@ -1,0 +1,122 @@
+# ========================================
+# CONFIGURAÇÕES APACHE - TOM STORE
+# ========================================
+
+# Habilitar CORS para desenvolvimento
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
+
+# Configurações de segurança
+<IfModule mod_security.c>
+    SecFilterEngine Off
+    SecFilterScanPOST Off
+</IfModule>
+
+# Evitar listagem de diretórios
+Options -Indexes
+
+# Páginas de erro personalizadas
+ErrorDocument 404 /index.html
+ErrorDocument 403 /index.html
+ErrorDocument 500 /index.html
+
+# Configurações de upload
+<IfModule mod_php.c>
+    upload_max_filesize 2M
+    post_max_size 8M
+    max_execution_time 300
+    memory_limit 256M
+</IfModule>
+
+# Reescrever URLs (opcional)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Redirecionar requisições de API
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^api/(.*)$ api/$1 [L,QSA]
+    
+    # Redirecionar para index se não for arquivo existente
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.html [L,QSA]
+</IfModule>
+
+# Configurações de cache
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Cache para imagens (1 semana)
+    ExpiresByType image/jpeg "access plus 1 week"
+    ExpiresByType image/png "access plus 1 week"
+    ExpiresByType image/gif "access plus 1 week"
+    ExpiresByType image/webp "access plus 1 week"
+    
+    # Cache para CSS/JS (1 dia)
+    ExpiresByType text/css "access plus 1 day"
+    ExpiresByType application/javascript "access plus 1 day"
+    
+    # Cache para HTML (1 hora)
+    ExpiresByType text/html "access plus 1 hour"
+</IfModule>
+
+# Compressão GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+
+# Proteger arquivos sensíveis
+<Files "config.php">
+    Require all denied
+</Files>
+
+<Files "*.log">
+    Require all denied
+</Files>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Permitir acesso à pasta uploads
+<Directory "uploads">
+    Options FollowSymLinks
+    AllowOverride None
+    Require all granted
+    
+    # Permitir apenas tipos de imagem
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp)$">
+        Require all granted
+    </FilesMatch>
+    
+    # Bloquear outros tipos de arquivo
+    <FilesMatch "^[^\.]+\.(?!jpg|jpeg|png|gif|webp$)[^.]+$">
+        Require all denied
+    </FilesMatch>
+</Directory>
+
+# Configurações de performance
+<IfModule mod_headers.c>
+    # Remover headers desnecessários
+    Header always unset X-Powered-By
+    Header always unset Server
+    
+    # Headers de segurança
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';"
+</IfModule>
