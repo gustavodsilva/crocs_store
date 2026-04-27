@@ -1,0 +1,73 @@
+@model TomStore.Application.DTOs.LoginDTO
+@{
+    ViewData["Title"] = "Login - Tom Store";
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/jpeg" href="~/images/1.logo.jpeg">
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="~/images/1.logo.jpeg" alt="Tom Store Logo" class="login-logo">
+                <h1>Tom Store</h1>
+                <p>Moda com Estilo</p>
+            </div>
+            
+            <form asp-controller="Account" asp-action="Login" method="post" class="login-form">
+                <div asp-validation-summary="ModelOnly" class="error-message">
+                    <span class="error-icon">⚠️</span>
+                    <span class="error-text"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="Username"></label>
+                    <input asp-for="Username" placeholder="(11) 99999-9999 ou nome de usuário" required>
+                    <span asp-validation-for="Username" class="field-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" type="password" required>
+                    <span asp-validation-for="Password" class="field-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="RememberMe">
+                        <input asp-for="RememberMe" />
+                        @Html.DisplayNameFor(m => m.RememberMe)
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-login">
+                    <span class="btn-text">Entrar</span>
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <div class="login-links">
+                    <a asp-controller="Account" asp-action="Register" class="link-cadastro">
+                        📝 Não tem conta? Cadastre-se
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Carregando...</p>
+    </div>
+
+    <script src="~/js/login.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>

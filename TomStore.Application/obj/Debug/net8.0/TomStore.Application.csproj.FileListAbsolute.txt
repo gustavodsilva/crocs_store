@@ -1,0 +1,16 @@
+C:\desenvolvimento\crocs_store\TomStore.Application\obj\Debug\net8.0\TomStore.Application.csproj.AssemblyReference.cache
+C:\desenvolvimento\crocs_store\TomStore.Application\obj\Debug\net8.0\TomStore.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\desenvolvimento\crocs_store\TomStore.Application\obj\Debug\net8.0\TomStore.Application.AssemblyInfoInputs.cache
+C:\desenvolvimento\crocs_store\TomStore.Application\obj\Debug\net8.0\TomStore.Application.AssemblyInfo.cs
+C:\desenvolvimento\crocs_store\TomStore.Application\obj\Debug\net8.0\TomStore.Application.csproj.CoreCompileInputs.cache
+C:\desenvolvimento\crocs_store\TomStore.Application\obj\Debug\net8.0\TomStore.Application.sourcelink.json
+C:\desenvolvimento\crocs_store\TomStore.Application\bin\Debug\net8.0\TomStore.Application.deps.json
+C:\desenvolvimento\crocs_store\TomStore.Application\bin\Debug\net8.0\TomStore.Application.dll
+C:\desenvolvimento\crocs_store\TomStore.Application\bin\Debug\net8.0\TomStore.Application.pdb
+C:\desenvolvimento\crocs_store\TomStore.Application\bin\Debug\net8.0\TomStore.Domain.dll
+C:\desenvolvimento\crocs_store\TomStore.Application\bin\Debug\net8.0\TomStore.Domain.pdb
+C:\desenvolvimento\crocs_store\TomStore.Application\obj\Debug\net8.0\TomStore.F6BC0B32.Up2Date
+C:\desenvolvimento\crocs_store\TomStore.Application\obj\Debug\net8.0\TomStore.Application.dll
+C:\desenvolvimento\crocs_store\TomStore.Application\obj\Debug\net8.0\refint\TomStore.Application.dll
+C:\desenvolvimento\crocs_store\TomStore.Application\obj\Debug\net8.0\TomStore.Application.pdb
+C:\desenvolvimento\crocs_store\TomStore.Application\obj\Debug\net8.0\ref\TomStore.Application.dll

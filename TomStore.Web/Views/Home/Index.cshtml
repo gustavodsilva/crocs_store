@@ -1,0 +1,36 @@
+@model IEnumerable<TomStore.Domain.Entities.Product>
+@{
+    ViewData["Title"] = "Tom Store - Moda com Estilo";
+}
+
+<div style="background: linear-gradient(135deg, #0D0D0D 0%, #1A1A1A 100%); padding: 20px; text-align: center;">
+    <h1 style="color: #00A86B; font-size: 48px; margin-bottom: 20px;">Tom Store</h1>
+    <p style="color: white; font-size: 20px;">Estilo que define seu Tom</p>
+</div>
+
+<div style="background: #0D0D0D; padding: 60px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="color: white; text-align: center; font-size: 36px; margin-bottom: 40px;">Nossos Produtos</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+            @foreach (var product in Model)
+            {
+                <div style="background: #1A1A1A; border: 1px solid #333333; border-radius: 15px; overflow: hidden; padding: 20px;">
+                    <div style="width: 100%; height: 200px; background: #333; border-radius: 10px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: #666;">Imagem</span>
+                    </div>
+                    <h3 style="color: white; font-size: 18px; margin-bottom: 10px;">@product.Nome</h3>
+                    <p style="color: #00A86B; font-size: 24px; font-weight: bold; margin-bottom: 15px;">R$ @product.Preco.ToString("F2")</p>
+                    <button style="background: #00A86B; color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; width: 100%;">
+                        Ver Detalhes
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div style="background: #1A1A1A; border-top: 2px solid #00A86B; padding: 30px; text-align: center;">
+    <p style="color: white;">&copy; 2026 Tom Store - Todos os direitos reservados</p>
+    <p style="color: #B0B0B0;">Contato: contato@tomstore.com | WhatsApp: (11) 98527-8370</p>
+</div>

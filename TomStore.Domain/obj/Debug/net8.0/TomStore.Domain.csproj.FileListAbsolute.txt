@@ -1,0 +1,13 @@
+C:\desenvolvimento\crocs_store\TomStore.Domain\bin\Debug\net8.0\TomStore.Domain.deps.json
+C:\desenvolvimento\crocs_store\TomStore.Domain\bin\Debug\net8.0\TomStore.Domain.dll
+C:\desenvolvimento\crocs_store\TomStore.Domain\bin\Debug\net8.0\TomStore.Domain.pdb
+C:\desenvolvimento\crocs_store\TomStore.Domain\obj\Debug\net8.0\TomStore.Domain.csproj.AssemblyReference.cache
+C:\desenvolvimento\crocs_store\TomStore.Domain\obj\Debug\net8.0\TomStore.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\desenvolvimento\crocs_store\TomStore.Domain\obj\Debug\net8.0\TomStore.Domain.AssemblyInfoInputs.cache
+C:\desenvolvimento\crocs_store\TomStore.Domain\obj\Debug\net8.0\TomStore.Domain.AssemblyInfo.cs
+C:\desenvolvimento\crocs_store\TomStore.Domain\obj\Debug\net8.0\TomStore.Domain.csproj.CoreCompileInputs.cache
+C:\desenvolvimento\crocs_store\TomStore.Domain\obj\Debug\net8.0\TomStore.Domain.sourcelink.json
+C:\desenvolvimento\crocs_store\TomStore.Domain\obj\Debug\net8.0\TomStore.Domain.dll
+C:\desenvolvimento\crocs_store\TomStore.Domain\obj\Debug\net8.0\refint\TomStore.Domain.dll
+C:\desenvolvimento\crocs_store\TomStore.Domain\obj\Debug\net8.0\TomStore.Domain.pdb
+C:\desenvolvimento\crocs_store\TomStore.Domain\obj\Debug\net8.0\ref\TomStore.Domain.dll
