@@ -1,0 +1,12 @@
+{
+  "name": "tom-store",
+  "version": "1.0.0",
+  "description": "Tom Store - ASP.NET Core Clean Architecture",
+  "scripts": {
+    "build": "dotnet build TomStore.Web/TomStore.Web.csproj",
+    "start": "dotnet run --project TomStore.Web/TomStore.Web.csproj"
+  },
+  "engines": {
+    "dotnet": "8.0"
+  }
+}

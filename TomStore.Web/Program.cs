@@ -15,8 +15,10 @@ builder.Services.AddControllersWithViews();
 
 // Configure Entity Framework
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"),
-    b => b.MigrationsAssembly("TomStore.Infrastructure")));
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseSqlite(connectionString, b => b.MigrationsAssembly("TomStore.Infrastructure"));
+});
 
 // Configure ASP.NET Core Identity
 builder.Services.AddIdentity<User, IdentityRole>(options =>
@@ -79,6 +81,21 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Ensure database is created
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    try
+    {
+        context.Database.EnsureCreated();
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred creating the DB.");
+    }
+}
 
 app.MapControllerRoute(
     name: "admin",
