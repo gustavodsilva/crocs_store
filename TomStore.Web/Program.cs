@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TomStore.Infrastructure.Data;
-using TomStore.Domain.Entities;
+using Microsoft.Data.Sqlite;
 using TomStore.Application.Interfaces;
 using TomStore.Application.Services;
+using TomStore.Domain.Entities;
+using TomStore.Infrastructure.Data;
 using TomStore.Infrastructure.Repositories;
 using TomStore.Infrastructure.Services;
 
@@ -14,7 +15,7 @@ builder.Services.AddControllersWithViews();
 
 // Configure Entity Framework
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"),
     b => b.MigrationsAssembly("TomStore.Infrastructure")));
 
 // Configure ASP.NET Core Identity

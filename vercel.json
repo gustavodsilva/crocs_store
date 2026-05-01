@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "TomStore.Web/TomStore.Web.csproj",
+      "use": "@vercel/dotnet"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/TomStore.Web"
+    }
+  ],
+  "env": {
+    "ASPNETCORE_ENVIRONMENT": "Production"
+  }
+}

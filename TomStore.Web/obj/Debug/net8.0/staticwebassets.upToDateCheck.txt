@@ -1,5 +1,0 @@
-wwwroot\js\cadastro.js
-wwwroot\js\login.js
-wwwroot\js\site.js
-wwwroot\login.css
-wwwroot\site.css
